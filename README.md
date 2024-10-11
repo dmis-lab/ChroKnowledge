@@ -7,7 +7,7 @@
     📃 <a href="https://arxiv.org/" target="_blank">Paper</a> | 🤗 <a href="https://huggingface.co/" target="_blank">Datasets</a>
 </p>
 
-![](assets/fig_overview.pdf)
+![](assets/fig_overview.png)
 
 ## Updates
 [Oct 11, 2024] We have released the code and data.
@@ -117,7 +117,7 @@ Use the `run_classification.ipynb` notebook to classify and analyze the model's 
 
 ### Step 2
 
-![](assets/fig_chroknow_promp.pdf)
+![](assets/fig_chroknow_promp.png)
 
 After running Step 1, you can use the ChroKnowPrompt prompting strategy to enhance the model's ability to recall and reason about chronological knowledge. This is implemented using the `run_chroknow_prompt.sh` script. Below is a detailed breakdown of the process:
 
