@@ -66,7 +66,14 @@ Then, follow the order of installation.
    ```
 3. Download the dataset from HuggingFace:
    ```bash
-   # Coming Soon...
+   huggingface-cli login
+   DATASET_DIR="/ChroKnowledge/ChroKnowBench"
+   mkdir -p $DATASET_DIR
+   datasets-cli download dmis-lab/ChroKnowBench -d $DATASET_DIR
+   ```
+   ```python
+   from datasets import load_dataset
+   load_dataset('dmis-lab/ChroKnowBench', cache_dir='/ChroKnowledge/ChroKnowBench')
    ```
 
 ## Implementation

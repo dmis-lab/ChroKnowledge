@@ -3,7 +3,7 @@ pytorch-cuda==11.8
 numpy==1.26.4
 tqdm==4.66.4
 transformers==4.44.0
-vllm==0.5.4
+vllm==0.5.5
 vllm-flash-attn==2.6.1
 accelerate==0.33.0
 python-liquid==1.12.1
