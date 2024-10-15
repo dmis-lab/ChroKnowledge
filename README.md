@@ -4,7 +4,7 @@
 **ChroKnowledge** is a research framework designed to evaluate and update the chronological knowledge of large language models (LLMs). It builds on the **ChroKnowBench** dataset, which enables testing LLMs' ability to handle chronologically accumulated knowledge across multiple domains, including general, biomedical, legal, commonsense, and mathematical facts. This repository also features **ChroKnowPrompt**, a technique for in-depth prompting to enhance temporal reasoning and improve the accuracy of LLMs over a timeline.
 
 <p align="center">
-    📃 <a href="https://arxiv.org/" target="_blank">Paper</a> | 🤗 <a href="https://huggingface.co/datasets/dmis-lab/ChroKnowBench" target="_blank">Datasets</a>
+    📃 <a href="https://arxiv.org/abs/2410.09870" target="_blank">Paper</a> | 🤗 <a href="https://huggingface.co/datasets/dmis-lab/ChroKnowBench" target="_blank">Datasets</a>
 </p>
 
 ![](assets/fig_overview.png)
