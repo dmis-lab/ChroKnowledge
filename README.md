@@ -169,12 +169,11 @@ Use the `run_evaluation.ipynb` notebook to evaluate the effectiveness of ChroKno
 
 ### Citation
 ```
-@misc{park2024ChroKnowledge,
+@article{park2024ChroKnowledge,
   title={ChroKnowledge: Unveiling Chronological Knowledge of Language Models in Multiple Domains},
-  author={Yein Park, Chanwoong Yoon, Jungwoo Park, Donghyeon Lee, Minbyul Jeong, Jaewoo Kang},
-  journal={arXiv preprint arXiv:},
-  year={2024},
-  url={https://arxiv.org}
+  author={Yein Park and Chanwoong Yoon and Jungwoo Park and Donghyeon Lee and Minbyul Jeong and Jaewoo Kang},
+  journal={arXiv preprint arXiv:2410.09870},
+  year={2024}
 }
 ```
 
