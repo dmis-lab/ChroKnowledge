@@ -75,7 +75,7 @@ Then, follow the order of installation.
    ```bash
    git clone https://huggingface.co/datasets/dmis-lab/ChroKnowBench
    ```
-   Please download the dataset in Huggingface first, then download Biomedical datset from the link above. \\
+   Please download the dataset in Huggingface first, then download Biomedical datset from the link above.   
    📌 We currently do not support `load_datset` module. Please wait for an update.
    
    <!-- ```bash
