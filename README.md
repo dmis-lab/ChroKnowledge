@@ -48,6 +48,11 @@ Our **ChroKnowBench** consists of datasets from multiple domains, with character
 
 \* For LEGAL dataset in time variant, it is the number of category like `Organization', as it is unstructured dataset without specific short relations.
 
+### Dataset Download
+For Biomedical dataset(Dynamic, Static and Fewshot), it is released [here](https://drive.google.com/file/d/17CMKxerO_j_B3r36QLtsyViQGfI0xn5l/view?usp=sharing).
+Please append each jsonl file to appropriate directory(`/ChroKnowBench` for Dynamic, Static file, and `/ChroKnowBench/Fewshots` for Fewshot file).
+Other benchmarks can be downloaded in [Huggingface Datasets](https://huggingface.co/datasets/dmis-lab/ChroKnowBench).
+
 ## Installation
 To ensure compatibiliity with other libraries, we recommend using the folliwng versions. You can adjust it based on your environments:
 
