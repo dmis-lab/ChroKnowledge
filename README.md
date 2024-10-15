@@ -75,8 +75,8 @@ Then, follow the order of installation.
    ```bash
    git clone https://huggingface.co/datasets/dmis-lab/ChroKnowBench
    ```
-   Please download the dataset in Huggingface first, then download Biomedical datset from the link above.
-   📌 We currently do not support `load_datset` module. Please wait for an update. 📌
+   Please download the dataset in Huggingface first, then download Biomedical datset from the link above. \\
+   📌 We currently do not support `load_datset` module. Please wait for an update.
    
    <!-- ```bash
    huggingface-cli login
@@ -103,7 +103,7 @@ To evaluate the initial temporal knowledge of the model, you can run the `run_kn
    ```bash
    model_name="Llama3.1_8B"
    ```
-   ⚠️ Warning: As the basic sampling is five times for each year, be careful for the cost of calling API. ⚠️
+   ⚠️ Warning: As the basic sampling is five times for each year, be careful for the cost of calling API.
 
 3. **Domain and Template**: You can specify the domain (e.g., `General`, `Biomedical`, `Legal`) and the type of task (`generation`, `QA`) by setting the `domain` and `template` variables, respectively.
    ```bash
