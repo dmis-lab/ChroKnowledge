@@ -1,7 +1,7 @@
 # ChroKnowledge: Unveiling Chronological Knowledge of Language Models in Multiple Domains
 
 ## Overview
-**ChroKnowledge** is a research framework designed to evaluate and update the chronological knowledge of large language models (LLMs). It builds on the **ChroKnowBench** dataset, which enables testing LLMs' ability to handle chronologically accumulated knowledge across multiple domains, including general, biomedical, legal, commonsense, and mathematical facts. This repository also features **ChroKnowPrompt**, a technique for in-depth prompting to enhance temporal reasoning and improve the accuracy of LLMs over a timeline.
+⏰ **ChroKnowledge** is a research framework designed to evaluate and update the chronological knowledge of large language models (LLMs). It builds on the **ChroKnowBench** dataset, which enables testing LLMs' ability to handle chronologically accumulated knowledge across multiple domains, including general, biomedical, legal, commonsense, and mathematical facts. This repository also features **ChroKnowPrompt**, a technique for in-depth prompting to enhance temporal reasoning and improve the accuracy of LLMs over a timeline.
 
 <p align="center">
     📃 <a href="https://arxiv.org/abs/2410.09870" target="_blank">Paper</a> | 🤗 <a href="https://huggingface.co/datasets/dmis-lab/ChroKnowBench" target="_blank">Datasets</a>
@@ -73,6 +73,12 @@ Then, follow the order of installation.
    ```
 3. Download the dataset from HuggingFace:
    ```bash
+   git clone https://huggingface.co/datasets/dmis-lab/ChroKnowBench
+   ```
+   Please download the dataset in Huggingface first, then download Biomedical datset from the link above.
+   📌 We currently do not support `load_datset` module. Please wait for an update. 📌
+   
+   <!-- ```bash
    huggingface-cli login
    DATASET_DIR="/ChroKnowledge/ChroKnowBench"
    mkdir -p $DATASET_DIR
@@ -81,7 +87,7 @@ Then, follow the order of installation.
    ```python
    from datasets import load_dataset
    load_dataset('dmis-lab/ChroKnowBench', cache_dir='/ChroKnowledge/ChroKnowBench')
-   ```
+   ``` -->
 
 ## Implementation
 ### Step 1: Chronological Knowledge Check
@@ -97,7 +103,7 @@ To evaluate the initial temporal knowledge of the model, you can run the `run_kn
    ```bash
    model_name="Llama3.1_8B"
    ```
-   ⚠️ Warning: As the basic sampling is five times for each year, be careful for the cost of calling API.
+   ⚠️ Warning: As the basic sampling is five times for each year, be careful for the cost of calling API. ⚠️
 
 3. **Domain and Template**: You can specify the domain (e.g., `General`, `Biomedical`, `Legal`) and the type of task (`generation`, `QA`) by setting the `domain` and `template` variables, respectively.
    ```bash
