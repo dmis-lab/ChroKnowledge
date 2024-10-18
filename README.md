@@ -10,7 +10,7 @@
 ![](assets/fig_overview.png)
 
 ## Updates
-[Oct 18, 2024] We post a [homepage](https://p-yi.github.io/ChroKnowledge/) for overview of our work.
+[Oct 18, 2024] We post a [homepage](https://p-yi.github.io/ChroKnowledge/) for overview of our work.   
 [Oct 11, 2024] We have released the code and data.
 
 ## Task Definition
