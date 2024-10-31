@@ -45,6 +45,8 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             stop = list(set(stop + ["<0x0A>"]))
         elif "mistral" in model_name.lower():
             stop = list(set(stop + ["<0x0A>"]))
+        elif "nemotron" in model_name.lower():
+            stop = list(set(stop + ["<0x0A>"]))
         elif "solar" in model_name.lower():
             stop = list(set(stop + ["<0x0A>"]))
         elif "gemma" in model_name.lower():
@@ -105,7 +107,28 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         prompt_c = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
                             t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], Ans1=triplet['distractor'][0], Ans2=triplet['distractor'][2], Ans3=triplet['distractor'][1], Ans4=triplet[f'objects_{year}'][0]
                         ) + '\n'
+                    elif template == "TF":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[0][f'release_date_{year}'])[:4], sub=few_shots[0]['subject'], obj=few_shots[0][f'objects_{year}'][0]
+                        ) + 'A. true' + '\n'
                         
+                        fs2 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[1][f'release_date_{year}'])[:4], sub=few_shots[1]['subject'], obj=few_shots[1]['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        fs3 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[2][f'release_date_{year}'])[:4], sub=few_shots[2]['subject'], obj=few_shots[2]['distractor'][2]
+                        ) + 'A. false' + '\n'
+                        
+                        fs4 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[3][f'release_date_{year}'])[:4], sub=few_shots[3]['subject'], obj=few_shots[3][f'objects_{year}'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        prompt_c = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
+                            t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], obj=triplet[f'objects_{year}'][0]
+                        )
+                    
                     prompts.append(prompt_c)
                 
             if i == 0:
@@ -183,7 +206,27 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         prompt_u = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
                             t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], Ans1=triplet['distractor'][0], Ans2=triplet['distractor'][2], Ans3=triplet['distractor'][1], Ans4=triplet[f'objects_{year}'][0]
                         ) + '\n'
+                    elif template == "TF":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[0][f'release_date_{year}'])[:4], sub=few_shots[0]['subject'], obj=few_shots[0][f'objects_{year}'][0]
+                        ) + 'A. true' + '\n'
                         
+                        fs2 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[1][f'release_date_{year}'])[:4], sub=few_shots[1]['subject'], obj=few_shots[1]['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        fs3 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[2][f'release_date_{year}'])[:4], sub=few_shots[2]['subject'], obj=few_shots[2]['distractor'][2]
+                        ) + 'A. false' + '\n'
+                        
+                        fs4 = prompt_template[triplet['relation']].render(
+                            t=str(few_shots[3][f'release_date_{year}'])[:4], sub=few_shots[3]['subject'], obj=few_shots[3][f'objects_{year}'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        prompt_u = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
+                            t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], obj=triplet[f'objects_{year}'][0]
+                        )
                     prompts.append(prompt_u)
                 
             if i == 0:
@@ -244,7 +287,7 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                     
                     selected_few_shots = random.sample(few_shots, 4)
                     
-                    if template == "KT":
+                    if template == "generation":
                         prompt_c = prompt_KT_t.render(
                             # Few-shot examples for current year
                             t1=str(selected_few_shots[0][f'release_date_{year}'])[:4], sub1=selected_few_shots[0]['subject'], rel1=selected_few_shots[0]['relation'], obj1=selected_few_shots[0][f'objects_{year}'][0],
@@ -275,7 +318,27 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         prompt_c = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
                             t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], Ans1=triplet['distractor'][0], Ans2=triplet['distractor'][2], Ans3=triplet['distractor'][1], Ans4=triplet[f'objects_{year}'][0]
                         ) + '\n'
-                    
+                    elif template == "TF":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[0][f'release_date_{year}'])[:4], sub=selected_few_shots[0]['subject'], obj=selected_few_shots[0]['distractor'][2]
+                        ) + 'A. false' + '\n'
+                        
+                        fs2 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[1][f'release_date_{year}'])[:4], sub=selected_few_shots[1]['subject'], obj=selected_few_shots[1]['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        fs3 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[2][f'release_date_{year}'])[:4], sub=selected_few_shots[2]['subject'], obj=selected_few_shots[2]['distractor'][2]
+                        ) + 'A. false' + '\n'
+                        
+                        fs4 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[3][f'release_date_{year}'])[:4], sub=selected_few_shots[3]['subject'], obj=selected_few_shots[3][f'objects_{year}'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        prompt_c = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
+                            t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], obj=triplet[f'objects_{year}'][0]
+                        )
                     prompts.append(prompt_c)
             
             # Print the first prompt for debugging
@@ -365,7 +428,27 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         prompt_u = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
                             t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], Ans1=triplet['distractor'][0], Ans2=triplet['distractor'][2], Ans3=triplet['distractor'][1], Ans4=triplet[f'objects_{year}'][0]
                         ) + '\n'
-                    
+                    elif template == "TF":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[0][f'release_date_{year}'])[:4], sub=selected_few_shots[0]['subject'], obj=selected_few_shots[0]['distractor'][2]
+                        ) + 'A. false' + '\n'
+                        
+                        fs2 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[1][f'release_date_{year}'])[:4], sub=selected_few_shots[1]['subject'], obj=selected_few_shots[1]['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        fs3 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[2][f'release_date_{year}'])[:4], sub=selected_few_shots[2]['subject'], obj=selected_few_shots[2]['distractor'][2]
+                        ) + 'A. false' + '\n'
+                        
+                        fs4 = prompt_template[triplet['relation']].render(
+                            t=str(selected_few_shots[3][f'release_date_{year}'])[:4], sub=selected_few_shots[3]['subject'], obj=selected_few_shots[3][f'objects_{year}'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        prompt_u = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
+                            t=str(triplet[f'release_date_{year}'])[:4], sub=triplet['subject'], obj=triplet[f'objects_{year}'][0]
+                        )
                     prompts.append(prompt_u)
                 
             if i == 0:
@@ -447,7 +530,27 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         prompt_c = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template.render(
                             t=str(question[f'release_date_{year}'])[:4], q=question["question"], Ans1=question['distractor'][0], Ans2=question['distractor'][2], Ans3=question['distractor'][1], Ans4=question[f'answers_{year}'][0]
                         ) + '\n'
+                    elif template == "TF":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template.render(
+                            t=str(few_shots[0][f'release_date_{year}'])[:4], q=few_shots[0]['question'].replace(' ____ ', few_shots[0]['distractor'][0])
+                        ) + 'A. false' + '\n'
                         
+                        fs2 = prompt_template.render(
+                            t=str(few_shots[1][f'release_date_{year}'])[:4], q=few_shots[1]['question'].replace(' ____ ', few_shots[1][f'answers_{year}'][0])
+                        ) + 'A. true' + '\n'
+                        
+                        fs3 = prompt_template.render(
+                            t=str(few_shots[2][f'release_date_{year}'])[:4], q=few_shots[2]['question'].replace(' ____ ', few_shots[2][f'answers_{year}'][0])
+                        ) + 'A. true' + '\n'
+                        
+                        fs4 = prompt_template.render(
+                            t=str(few_shots[3][f'release_date_{year}'])[:4], q=few_shots[3]['question'].replace(' ____ ', few_shots[3]['distractor'][1])
+                        ) + 'A. false' + '\n'
+                        
+                        prompt_c = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template.render(
+                            t=str(question[f'release_date_{year}'])[:4], q=question["question"].replace(' ____ ', question[f'answers_{year}'][0])
+                        )    
                     prompts.append(prompt_c)
                 
             if i == 0:
@@ -525,7 +628,27 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         prompt_u = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template.render(
                             t=str(question[f'release_date_{year}'])[:4], q=question["question"], Ans1=question['distractor'][0], Ans2=question['distractor'][2], Ans3=question['distractor'][1], Ans4=question[f'answers_{year}'][0]
                         ) + '\n'
-
+                    elif template == "TF":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template.render(
+                            t=str(few_shots[0][f'release_date_{year}'])[:4], q=few_shots[0]['question'].replace(' ____ ', few_shots[0]['distractor'][0])
+                        ) + 'A. false' + '\n'
+                        
+                        fs2 = prompt_template.render(
+                            t=str(few_shots[1][f'release_date_{year}'])[:4], q=few_shots[1]['question'].replace(' ____ ', few_shots[1][f'answers_{year}'][0])
+                        ) + 'A. true' + '\n'
+                        
+                        fs3 = prompt_template.render(
+                            t=str(few_shots[2][f'release_date_{year}'])[:4], q=few_shots[2]['question'].replace(' ____ ', few_shots[2][f'answers_{year}'][0])
+                        ) + 'A. true' + '\n'
+                        
+                        fs4 = prompt_template.render(
+                            t=str(few_shots[3][f'release_date_{year}'])[:4], q=few_shots[3]['question'].replace(' ____ ', few_shots[3]['distractor'][1])
+                        ) + 'A. false' + '\n'
+                        
+                        prompt_u = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template.render(
+                            t=str(question[f'release_date_{year}'])[:4], q=question["question"].replace(' ____ ', question[f'answers_{year}'][0])
+                        )
                     prompts.append(prompt_u)
                 
             if i == 0:
@@ -630,6 +753,49 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                             t=year, sub=triplet['subject'], Ans1=triplet['distractor'][0], Ans2=triplet['distractor'][2], Ans3=triplet['distractor'][1], Ans4=triplet['objects'][0]
                         ) + '\n'
 
+                    elif template == "TF" and domain == "Math":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[0]['subject'], obj=few_shots[0]['objects'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        fs2 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[1]['subject'], obj=few_shots[1]['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        fs3 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[2]['subject'], obj=few_shots[2]['objects'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        fs4 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[3]['subject'], obj=few_shots[3]['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        prompt = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
+                            t=year, sub=triplet['subject'], obj=triplet['objects'][0]
+                        ) 
+                        
+                    elif template == "TF" and domain == "CommonSense":
+                        prompt_template = eval(f'prompt_TF_{domain}_t')
+                        fs1 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[0]['subject'], obj=few_shots[0]['objects'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        fs2 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[1]['subject'], obj=few_shots[1]['objects'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        fs3 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[2]['subject'], obj=few_shots[2]['objects'][0]
+                        ) + 'A. true' + '\n'
+                        
+                        fs4 = prompt_template[triplet['relation']].render(
+                            t=year, sub=few_shots[3]['subject'], obj=few_shots[3]['distractor']['distractor'][0]
+                        ) + 'A. false' + '\n'
+                        
+                        prompt = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(
+                            t=year, sub=triplet['subject'], obj=triplet['objects'][0]
+                        )
                     prompts.append(prompt)
                     
             if i == 0:

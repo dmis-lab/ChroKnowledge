@@ -76,7 +76,7 @@ def load_result(model_name, domain, temp_state, mode):
         temp0_parsed = parse_and_structure_time(temp0_data)
         temp7_parsed = parse_and_structure_time(temp7_data)
         
-    if mode == "generation":
+    if mode == "generation" or mode == "TF":
         if temp_state == "Dynamic":
             bench = bench_dynamic
             temp0_parsed_time = temp0_dynamic_parsed
@@ -94,16 +94,16 @@ def load_result(model_name, domain, temp_state, mode):
     elif mode == "QA":
         if temp_state == "Dynamic":
             bench = bench_dynamic
-            temp0_parsed_time = temp0_dynamic_parsed
-            temp7_parsed_time = temp7_dynamic_parsed
+            temp0_parsed_time = temp0_dynamic_data
+            temp7_parsed_time = temp7_dynamic_data
         elif temp_state == "Static":
             bench = bench_static
-            temp0_parsed_time = temp0_static_parsed
-            temp7_parsed_time = temp7_static_parsed
+            temp0_parsed_time = temp0_static_data
+            temp7_parsed_time = temp7_static_data
         else:
             bench = bench
-            temp0_parsed_time = temp0_parsed
-            temp7_parsed_time = temp7_parsed
+            temp0_parsed_time = temp0_data
+            temp7_parsed_time = temp7_data
 
     else:
         raise AssertionError("unspecified mode")
@@ -163,7 +163,7 @@ def classify_knowledge_fuzz(benchmark, temp0_ans, temp7_ans, threshold=70):
 #### QA Match ####
 def classify_knowledge_qa(benchmark, temp0_ans, temp7_ans):
     def is_direct_match(ans):
-        return ans.startswith("(d)")  # New logic: Check if the answer starts with "(d)"
+        return ans is not None and ans.startswith("(d)")  # New logic: Check if the answer starts with "(d)"
 
     # Check for empty temp0_ans first
     if not temp0_ans:
@@ -184,10 +184,33 @@ def classify_knowledge_qa(benchmark, temp0_ans, temp7_ans):
             return 'partial_correct2'
         else:
             return 'incorrect'
+        
+#### TF Match ####
+def classify_knowledge_tf(benchmark, temp0_ans, temp7_ans):
+    def is_direct_match_tf(ans):
+        return ans is not None and "true" in ans.lower()
 
+    if not temp0_ans:
+        if not temp7_ans:
+            return 'incorrect'  # Both lists are empty
+        elif any(is_direct_match_tf(ans) for ans in temp7_ans):
+            return 'partial_correct2'  # Only temp7_ans has matching elements
+        else:
+            return 'incorrect'
+
+    # If temp0_ans is not empty, continue with the direct matching logic
+    if all(is_direct_match_tf(ans) for ans in temp0_ans):
+        return 'correct'
+    elif any(is_direct_match_tf(ans) for ans in temp0_ans):
+        return 'partial_correct1'
+    elif not any(is_direct_match_tf(ans) for ans in temp0_ans):
+        if any(is_direct_match_tf(ans) for ans in temp7_ans):
+            return 'partial_correct2'
+        else:
+            return 'incorrect'
 
 ### Answer Classification ###
-def classify_results_time(data_entries, temp0_parsed_time, temp7_parsed_time, model_name, bench_name):
+def classify_results_time(data_entries, temp0_parsed_time, temp7_parsed_time, model_name, bench_name, mode):
     def get_benchmark(entry):
         if bench_name == "Legal":
             if any(f'answers_{year}' in entry for year in range(2010, 2025)):
@@ -216,14 +239,24 @@ def classify_results_time(data_entries, temp0_parsed_time, temp7_parsed_time, mo
         for year in years:
             if year in benchmark:
                 benchmark_objects = benchmark[year]
-                category = classify_knowledge_fuzz(benchmark_objects, temp0_ans[year], temp7_ans[year])
+                if mode == "generation":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans[year], temp7_ans[year])
+                elif mode == "QA":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans[year], temp7_ans[year])
+                elif mode == "TF":
+                    category = classify_knowledge_tf(benchmark_objects, temp0_ans[year], temp7_ans[year])
                 results[year][category] += 1
                 
                 for obj in benchmark_objects:
                     object_classifications[year][obj] = category
             else:
                 benchmark_objects = benchmark['all_years']
-                category = classify_knowledge_fuzz(benchmark_objects, temp0_ans[year], temp7_ans[year])
+                if mode == "generation":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans[year], temp7_ans[year])
+                elif mode == "QA":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans[year], temp7_ans[year])
+                elif mode == "TF":
+                    category = classify_knowledge_tf(benchmark_objects, temp0_ans[year], temp7_ans[year])
                 results[year][category] += 1
                 
                 for obj in benchmark_objects:
@@ -231,7 +264,7 @@ def classify_results_time(data_entries, temp0_parsed_time, temp7_parsed_time, mo
 
     return results, object_classifications
 
-def classify_results_time_fine_graining(data_entries, temp0_parsed_time, temp7_parsed_time, model_name, bench_name):
+def classify_results_time_fine_graining(data_entries, temp0_parsed_time, temp7_parsed_time, model_name, bench_name, mode):
     def get_benchmark(entry):
         if bench_name == "Legal":
             if any(f'answers_{year}' in entry for year in range(2010, 2025)):
@@ -263,10 +296,20 @@ def classify_results_time_fine_graining(data_entries, temp0_parsed_time, temp7_p
         for year in years:
             if year in benchmark:
                 benchmark_objects = benchmark[year]
-                category = classify_knowledge_fuzz(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
+                if mode == "generation":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
+                elif mode == "QA":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
+                elif mode == "TF":
+                    category = classify_knowledge_tf(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
             else:
                 benchmark_objects = benchmark['all_years']
-                category = classify_knowledge_fuzz(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
+                if mode == "generation":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
+                elif mode == "QA":
+                    category = classify_knowledge_fuzz(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
+                elif mode == "TF":
+                    category = classify_knowledge_tf(benchmark_objects, temp0_ans.get(year, []), temp7_ans.get(year, []))
 
             # Update the classification to include temp0_ans and temp7_ans
             year_classifications[f'{year}'] = {

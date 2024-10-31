@@ -42,6 +42,8 @@ def run_chroknowprompt(model_name, dtype, device_num, gpu_util, multi_gpu, max_t
             stop = list(set(stop + ["<0x0A>"]))
         elif "mistral" in model_name.lower():
             stop = list(set(stop + ["<0x0A>"]))
+        elif "nemotron" in model_name.lower():
+            stop = list(set(stop + ["<0x0A>"]))
         elif "solar" in model_name.lower():
             stop = list(set(stop + ["<0x0A>"]))
         elif "gemma" in model_name.lower():

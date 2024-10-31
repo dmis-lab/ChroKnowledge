@@ -81,158 +81,104 @@ Q. In {{t}}, {{q}}
 
 ### Prompt of TF (True False) ###
 
-prompt_TF_Biomedical = {
-    "isa": Template("""Q. {{sub}} is a {{obj}}.
-                    A. {{Ans}}"""),
-    "inverse_isa": Template("""Q. {{sub}} is an inverse of {{obj}}.
-                            A. {{Ans}}"""),
-    "direct_procedure_site_of": Template("""Q. {{sub}} is direct procedure site of {{obj}}.
-                                         A. {{Ans}}"""),
-    "indirect_procedure_site_of": Template("""Q. {{sub}} is indirect procedure site of {{obj}}.
-                                           A. {{Ans}}"""),
-    "is_primary_anatomic_site_of_disease": Template("""Q. {{sub}} is primary anatomic site of disease {{obj}}.
-                                                    A. {{Ans}}"""),
-    "is_not_primary_anatomic_site_of_disease": Template("""Q. {{sub}} is not the primary anatomic site of disease {{obj}}.
-                                                        A. {{Ans}}"""),
-    "is_normal_tissue_origin_of_disease": Template("""Q. {{sub}} is normal tissue origin of disease {{obj}}.
-                                                   A. {{Ans}}"""),
-    "is_not_normal_tissue_origin_of_disease": Template("""Q. {{sub}} is not normal tissue origin of disease {{obj}}.
-                                                       A. {{Ans}}"""),
-    "is_normal_cell_origin_of_disease": Template("""Q. {{sub}} is normal cell origin of disease {{obj}}.
-                                                 A. {{Ans}}"""),
-    "is_not_normal_cell_origin_of_disease": Template("""Q. {{sub}} is not normal cell origin of disease {{obj}}.
-                                                     A. {{Ans}}"""),
-    "has_direct_procedure_site": Template("""Q. {{sub}} has direct procedure site {{obj}}.
-                                          A. {{Ans}}"""),
-    "has_indirect_procedure_site": Template("""Q. {{sub}} has indirect procedure site {{obj}}.
-                                            A. {{Ans}}"""),
-    "positively_regulates": Template("""Q. {{sub}} positively regulates {{obj}}.
-                                     A. {{Ans}}"""),
-    "negatively_regulates": Template("""Q. {{sub}} negatively regulates {{obj}}.
-                                     A. {{Ans}}""")
-}
-
 prompt_TF_Biomedical_t = {
     "isa": Template("""Q. In {{t}}, {{sub}} is a {{obj}}.
-                    A. {{Ans}}"""),
+"""),
     "inverse_isa": Template("""Q. In {{t}}, {{sub}} is an inverse of {{obj}}.
-                            A. {{Ans}}"""),
+"""),
     "direct_procedure_site_of": Template("""Q. In {{t}}, {{sub}} is direct procedure site of {{obj}}.
-                                         A. {{Ans}}"""),
+"""),
     "indirect_procedure_site_of": Template("""Q. In {{t}}, {{sub}} is indirect procedure site of {{obj}}.
-                                           A. {{Ans}}"""),
+"""),
     "is_primary_anatomic_site_of_disease": Template("""Q. In {{t}}, {{sub}} is primary anatomic site of disease {{obj}}.
-                                                    A. {{Ans}}"""),
+"""),
     "is_not_primary_anatomic_site_of_disease": Template("""Q. In {{t}}, {{sub}} is not the primary anatomic site of disease {{obj}}.
-                                                        A. {{Ans}}"""),
+"""),
     "is_normal_tissue_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is normal tissue origin of disease {{obj}}.
-                                                   A. {{Ans}}"""),
+"""),
     "is_not_normal_tissue_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is not normal tissue origin of disease {{obj}}.
-                                                       A. {{Ans}}"""),
+"""),
     "is_normal_cell_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is normal cell origin of disease {{obj}}.
-                                                 A. {{Ans}}"""),
+"""),
     "is_not_normal_cell_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is not normal cell origin of disease {{obj}}.
-                                                     A. {{Ans}}"""),
+"""),
     "has_direct_procedure_site": Template("""Q. In {{t}}, {{sub}} has direct procedure site {{obj}}.
-                                          A. {{Ans}}"""),
+"""),
     "has_indirect_procedure_site": Template("""Q. In {{t}}, {{sub}} has indirect procedure site {{obj}}.
-                                            A. {{Ans}}"""),
+"""),
     "positively_regulates": Template("""Q. In {{t}}, {{sub}} positively regulates {{obj}}.
-                                     A. {{Ans}}"""),
+"""),
     "negatively_regulates": Template("""Q. In {{t}}, {{sub}} negatively regulates {{obj}}.
-                                     A. {{Ans}}""")
+""")
 }
 
-prompt_TF_CommonSense = {
-    "HasProperty": Template("""Q. {{sub}} has property {{obj}}.
-                            A. {{Ans}}"""),
-    "NotHasProperty": Template("""Q. {{sub}} not has property {{obj}}.
-                               A. {{Ans}}"""),
-    "CapableOf": Template("""Q. {{sub}} is capable of {{obj}}.
-                          A. {{Ans}}"""),
-    "NotCapableOf": Template("""Q. {{sub}} is not capable of {{obj}}.
-                             A. {{Ans}}"""),
-    "Desires": Template("""Q. {{sub}} desires {{obj}}.
-                        A. {{Ans}}"""),
-    "NotDesires": Template("""Q. {{sub}} does not desires {{obj}}.
-                           A. {{Ans}}"""),
-    "Synonym": Template("""Q. {{sub}} is synonym for {{obj}}.
-                        A. {{Ans}}"""),
-    "Antonym": Template("""Q. {{sub}} is antonym for {{obj}}.
-                        A. {{Ans}}""")
+prompt_TF_General_t = {
+    "employer": Template("""Q. In {{t}}, {{sub}} is an employer of {{obj}}.
+"""),
+    "member of sports team": Template("""Q. In {{t}}, {{sub}} is a member of the sports team {{obj}}.
+"""),
+    "officeholder": Template("""Q. In {{t}}, {{sub}} is an officeholder of {{obj}}.
+"""),
+    "member of": Template("""Q. In {{t}}, {{sub}} is a member of {{obj}}.
+"""),
+    "educated at": Template("""Q. In {{t}}, {{sub}} was educated at {{obj}}.
+"""),
+    "chief executive officer": Template("""Q. In {{t}}, {{sub}} is the chief executive officer of {{obj}}.
+"""),
+    "director / manager": Template("""Q. In {{t}}, {{sub}} is the director or manager of {{obj}}.
+"""),
+    "position held": Template("""Q. In {{t}}, {{sub}} holds the position of {{obj}}.
+""")
 }
+
+prompt_TF_Legal_t = Template("""Please answer true/false.
+Q. In {{t}}, {{q}}
+""")
 
 prompt_TF_CommonSense_t = {
     "HasProperty": Template("""Q. In {{t}}, {{sub}} has property {{obj}}.
-                            A. {{Ans}}"""),
+"""),
     "NotHasProperty": Template("""Q. In {{t}}, {{sub}} not has property {{obj}}.
-                               A. {{Ans}}"""),
+"""),
     "CapableOf": Template("""Q. In {{t}}, {{sub}} is capable of {{obj}}.
-                          A. {{Ans}}"""),
+"""),
     "NotCapableOf": Template("""Q. In {{t}}, {{sub}} is not capable of {{obj}}.
-                             A. {{Ans}}"""),
+"""),
     "Desires": Template("""Q. In {{t}}, {{sub}} desires {{obj}}.
-                        A. {{Ans}}"""),
+"""),
     "NotDesires": Template("""Q. In {{t}}, {{sub}} does not desires {{obj}}.
-                           A. {{Ans}}"""),
+"""),
     "Synonym": Template("""Q. In {{t}}, {{sub}} is synonym for {{obj}}.
-                        A. {{Ans}}"""),
+"""),
     "Antonym": Template("""Q. In {{t}}, {{sub}} is antonym for {{obj}}.
-                        A. {{Ans}}""")
-}
-
-prompt_TF_Math = {
-    "Synonym": Template("""Q. {{sub}} is synonym for {{obj}}.
-                        A. {{Ans}}"""),
-    "Antonym": Template("""Q. {{sub}} is antonym for {{obj}}.
-                        A. {{Ans}}"""),
-    "Rely_on": Template("""Q. {{sub}} rely on {{obj}}.
-                        A. {{Ans}}"""),
-    "Inverse_rely_on": Template("""Q. {{sub}} is relied on by {{obj}}.
-                               A. {{Ans}}"""),
-    "Belong_to": Template("""Q. {{sub}} belong to {{obj}}.
-                          A. {{Ans}}"""),
-    "Inverse_belong_to": Template("""Q. {{sub}} is belonged to by {{obj}}.
-                                  A. {{Ans}}"""),
-    "Property_of": Template("""Q. {{sub}} is a property of {{obj}}.
-                           A. {{Ans}}"""),
-    "Inverse_property_of": Template("""Q. {{sub}} has the property of {{obj}}.
-                                   A. {{Ans}}"""),
-    "None": Template("""Q. {{sub}} has no specific relation with {{obj}}.
-                   A. {{Ans}}"""),
-    "Similar": Template("""Q. {{sub}} is similar to {{obj}}.
-                        A. {{Ans}}"""),
-    "Apposition": Template("""Q. {{sub}} is in apposition to {{obj}}.
-                            A. {{Ans}}"""),
-    "Other": Template("""Q. {{sub}} has other relations with {{obj}}.
-                        A. {{Ans}}"""),
+""")
 }
 
 prompt_TF_Math_t = {
     "Synonym": Template("""Q. In {{t}}, {{sub}} is synonym for {{obj}}.
-                        A. {{Ans}}"""),
+"""),
     "Antonym": Template("""Q. In {{t}}, {{sub}} is antonym for {{obj}}.
-                        A. {{Ans}}"""),
+"""),
     "Rely_on": Template("""Q. In {{t}}, {{sub}} rely on {{obj}}.
-                        A. {{Ans}}"""),
+"""),
     "Inverse_rely_on": Template("""Q. In {{t}}, {{sub}} is relied on by {{obj}}.
-                               A. {{Ans}}"""),
+"""),
     "Belong_to": Template("""Q. In {{t}}, {{sub}} belong to {{obj}}.
-                          A. {{Ans}}"""),
+"""),
     "Inverse_belong_to": Template("""Q. In {{t}}, {{sub}} is belonged to by {{obj}}.
-                                  A. {{Ans}}"""),
+"""),
     "Property_of": Template("""Q. In {{t}}, {{sub}} is a property of {{obj}}.
-                           A. {{Ans}}"""),
+"""),
     "Inverse_property_of": Template("""Q. In {{t}}, {{sub}} has the property of {{obj}}.
-                                   A. {{Ans}}"""),
+"""),
     "None": Template("""Q. In {{t}}, {{sub}} has no specific relation with {{obj}}.
-                   A. {{Ans}}"""),
+"""),
     "Similar": Template("""Q. In {{t}}, {{sub}} is similar to {{obj}}.
-                        A. {{Ans}}"""),
+"""),
     "Apposition": Template("""Q. In {{t}}, {{sub}} is in apposition to {{obj}}.
-                            A. {{Ans}}"""),
+"""),
     "Other": Template("""Q. In {{t}}, {{sub}} has other relations with {{obj}}.
-                        A. {{Ans}}"""),
+"""),
 }
 
 

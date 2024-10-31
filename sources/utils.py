@@ -21,7 +21,14 @@ model_id_dict = {
     "Llama3_8B": "meta-llama/Meta-Llama-3-8B-Instruct",
     "Gemma_7B": "google/gemma-7b-it",
     "SOLAR_10.7B": "upstage/SOLAR-10.7B-Instruct-v1.0",
-    "Llama2_7B": "meta-llama/Llama-2-7b-chat-hf"
+    "Llama2_7B": "meta-llama/Llama-2-7b-chat-hf",
+    "Llama3.1_70B": "meta-llama/Llama-3.1-70B-Instruct",
+    "SOLAR_22B": "upstage/solar-pro-preview-instruct",
+    "Qwen2.5_72B": "Qwen/Qwen2.5-72B-Instruct",
+    "mpt_7B": "mosaicml/mpt-7b-chat",
+    "Pythia_7B": "togethercomputer/Pythia-Chat-Base-7B",
+    "Nemotron3": "mgoin/nemotron-3-8b-chat-4k-sft-hf",
+    "Mistral7B_Chat": "Norquinal/Mistral-7B-claude-chat"
 }
 
 
@@ -86,7 +93,7 @@ def get_model(model_name, token=None, cache_dir=None):
     model_id = model_id_dict[model_name]
     
     if cache_dir != None:
-        cache_dir = model_dir_pattern
+        model_dir_pattern = cache_dir
     else:
         base_dir = "./models"
         os.makedirs(base_dir, exist_ok=True)
@@ -187,13 +194,13 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
         if direction == 'previous':
             for year in reversed(years[:target_index]):
                 year_key = f'objects_{year}'
-                if (partial_known[year_key]["category"] in ["highly_known", "maybe_known", "weakly_known"] 
+                if (partial_known[year_key]["category"] in ["correct", "partial_correct1", "partial_correct2"] 
                         or "chrono_ans" in partial_known[year_key]):
                     return year, partial_known[year_key]
         else:  # next
             for year in years[target_index + 1:]:
                 year_key = f'objects_{year}'
-                if (partial_known[year_key]["category"] in ["highly_known", "maybe_known", "weakly_known"] 
+                if (partial_known[year_key]["category"] in ["correct", "partial_correct1", "partial_correct2"] 
                         or "chrono_ans" in partial_known[year_key]):
                     return year, partial_known[year_key]
 
@@ -208,7 +215,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
                 return most_common_entity(chrono_ans)
             else:
                 return chrono_ans
-        elif reference_data["category"] == "highly_known":
+        elif reference_data["category"] == "correct":
             return most_common_entity(reference_data["temp0_ans"])
         else:
             return most_common_entity(reference_data["temp7_ans"])
