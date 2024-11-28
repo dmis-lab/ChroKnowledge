@@ -188,7 +188,7 @@ def classify_knowledge_qa(benchmark, temp0_ans, temp7_ans):
 #### TF Match ####
 def classify_knowledge_tf(benchmark, temp0_ans, temp7_ans):
     def is_direct_match_tf(ans):
-        return ans is not None and "true" in ans.lower()
+        return ans is not None and (ans is True or (isinstance(ans, str) and "true" in ans.lower()))
 
     if not temp0_ans:
         if not temp7_ans:

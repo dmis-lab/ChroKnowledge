@@ -9,8 +9,13 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from template import *
 
 from openai import OpenAI
-api_key = "YOUR API KEY"
-client = OpenAI(api_key=api_key)
+api_key_openai = "YOUR API KEY"
+client = OpenAI(api_key=api_key_openai)
+
+import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
+api_key_google = "YOUR API KEY"
+genai.configure(api_key=api_key_google)
 
 
 model_id_dict = {
@@ -178,6 +183,54 @@ def gpt_batch_generation(model_name, inputs, temperature, max_tokens):
         result = response.choices[0].message.content
         results.append(result)
     return results
+
+### Gemini Generation ###
+def gemini_generation(model_name, input, temperature, max_tokens):
+    
+    model = genai.GenerativeModel(model_name)
+    response = model.generate_content(
+                input,
+                generation_config=genai.types.GenerationConfig(
+                    candidate_count=1,
+                    temperature=temperature,
+                    max_output_tokens=max_tokens,
+                    top_p=1
+                ),
+                safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+            }
+        )
+    result = response.candidates[0].content.parts[0].text
+    
+    return result
+
+### Gemini Batch Generation ###
+def gemini_batch_generation(model_name, inputs, temperature, max_tokens):
+    model = genai.GenerativeModel(model_name)
+    results = []
+    for input in inputs:
+        response = model.generate_content(
+                input,
+                generation_config=genai.types.GenerationConfig(
+                    candidate_count=1,
+                    temperature=temperature,
+                    max_output_tokens=max_tokens,
+                    top_p=1
+                ),
+                safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+            }
+        )
+        result = response.candidates[0].content.parts[0].text
+        results.append(result)
+    return results
+
 
 ### ChroKnow Prompt Generation Algorithm ###
 def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, tokenizer, sampling_params, temperature, max_tokens, domain, prev_year_span=3, next_year_span=3):
@@ -398,6 +451,8 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             # print("Prompt Messages (Previous):", prompt_messages)
             if "gpt" in model_name.lower():
                 new_ans = gpt_result(model_name, prompt_messages, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                new_ans = gemini_result(model_name, prompt_messages, temperature, max_tokens)
             else:
                 new_ans = generate_llm_response(llm, prompt_messages, tokenizer, sampling_params)
             # print("New Answer (Previous):", new_ans)
@@ -476,6 +531,8 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             # print("Prompt Messages (Next):", prompt_messages)
             if "gpt" in model_name.lower():
                 new_ans = gpt_result(model_name, prompt_messages, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                new_ans = gemini_result(model_name, prompt_messages, temperature, max_tokens)
             else:
                 new_ans = generate_llm_response(llm, prompt_messages, tokenizer, sampling_params)
             # print("New Answer (Next):", new_ans)
@@ -529,6 +586,38 @@ def gpt_result(model_name, prompt, temperature, max_tokens):
   
     result = response.choices[0].message.content
 
+    return result
+
+def gemini_result(model_name, prompt, temperature, max_tokens):
+    
+    system_prompt = next(
+        (msg["content"] for msg in prompt if msg["role"] == "system"), ""
+    )
+    user_prompt = next(
+        (msg["content"] for msg in prompt if msg["role"] == "user"), ""
+    )
+
+    model = genai.GenerativeModel(
+        model_name=model_name,
+        system_instruction=system_prompt
+    )
+    response = model.generate_content(
+        user_prompt,
+        generation_config=genai.types.GenerationConfig(
+            candidate_count=1,
+            temperature=temperature,
+            max_output_tokens=max_tokens,
+            top_p=1
+        ),
+        safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+        }
+    )
+    result = response.candidates[0].content.parts[0].text
+    
     return result
 
 def generate_llm_response(llm, prompt, tokenizer, sampling_params):

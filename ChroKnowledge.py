@@ -31,7 +31,7 @@ set_seed(SEED)
 def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu, max_tokens, domain, template, temperature, token=None, cache_dir=None, save_results=True):
     
     ### Load model with setting stop tokens ###
-    if "gpt" not in model_name.lower():
+    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
         ### Load model with setting stop tokens ###
         model_path = get_model(model_name, token=token, cache_dir=cache_dir)
         llm = LLM(model=model_path, gpu_memory_utilization=gpu_util, dtype=dtype, device=device_num, tensor_parallel_size=multi_gpu)
@@ -134,17 +134,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
                 
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
     
             # Process the outputs
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]
@@ -232,17 +234,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
                 
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
     
             # Process the outputs
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]
@@ -345,17 +349,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
             
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
             
             # Process and store the outputs for each year
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]
@@ -454,17 +460,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
                 
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
     
             # Process the outputs
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]
@@ -556,17 +564,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
                 
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
     
             # Process the outputs
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]
@@ -654,17 +664,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
                 
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
     
             # Process the outputs
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]
@@ -801,17 +813,19 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
             if i == 0:
                 print(prompts[0])
                     
-            if "gpt" not in model_name.lower():
-                outputs = llm.generate(prompts, sampling_params)
-            else:
+            if "gpt" in model_name.lower():
                 outputs = gpt_batch_generation(model_name, prompts, temperature, max_tokens)
+            elif "gemini" in model_name.lower():
+                outputs = gemini_batch_generation(model_name, prompts, temperature, max_tokens)
+            else:
+                outputs = llm.generate(prompts, sampling_params)
                 
             # Process the outputs
             output_index = 0
             for year in years:
                 year_outputs = []
                 for _ in range(5):
-                    if "gpt" not in model_name.lower():
+                    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
                         generated_text = outputs[output_index].outputs[0].text
                     else:
                         generated_text = outputs[output_index]

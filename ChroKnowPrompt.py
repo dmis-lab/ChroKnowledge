@@ -28,7 +28,7 @@ set_seed(SEED)
 ### Main Processing Part ###
 def run_chroknowprompt(model_name, dtype, device_num, gpu_util, multi_gpu, max_tokens, domain, temperature, prev_span=3, next_span=3, token=None, cache_dir=None, save_results=True):
     
-    if "gpt" not in model_name.lower():
+    if "gpt" not in model_name.lower() or "gemini" not in model_name.lower():
         ### Load model with setting stop tokens ###
         model_path = get_model(model_name, token=token, cache_dir=cache_dir)
         llm = LLM(model=model_path, gpu_memory_utilization=gpu_util, dtype=dtype, device=device_num, tensor_parallel_size=multi_gpu)

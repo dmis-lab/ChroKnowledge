@@ -1,5 +1,4 @@
 torch==2.4.0
-pytorch-cuda==11.8
 numpy==1.26.4
 tqdm==4.66.4
 transformers==4.44.0
@@ -13,5 +12,6 @@ matplotlib-inline==0.1.7
 rapidfuzz==3.9.6
 scipy==1.14.0
 torchvision==0.19.0
-torchaudio==2.3.0
+torchaudio==2.4.0
 openai==1.41.0
+google-cloud-aiplatform==1.71.1
