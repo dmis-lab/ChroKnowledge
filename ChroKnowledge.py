@@ -802,7 +802,7 @@ def knowledge_check_with_time(model_name, dtype, device_num, gpu_util, multi_gpu
                         ) + 'A. true' + '\n'
                         
                         fs4 = prompt_template[triplet['relation']].render(
-                            t=year, sub=few_shots[3]['subject'], obj=few_shots[3]['distractor']['distractor'][0]
+                            t=year, sub=few_shots[3]['subject'], obj=few_shots[3]['distractor'][0]
                         ) + 'A. false' + '\n'
                         
                         prompt = fs1 + '\n' + fs2 + '\n' + fs3 + '\n' + fs4 + '\n' + prompt_template[triplet['relation']].render(

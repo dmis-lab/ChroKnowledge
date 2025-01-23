@@ -1,4 +1,4 @@
-# ChroKnowledge: Unveiling Chronological Knowledge of Language Models in Multiple Domains
+# \[ICLR 2025\] ChroKnowledge: Unveiling Chronological Knowledge of Language Models in Multiple Domains
 
 ## Overview
 ⏰ **ChroKnowledge** is a research framework designed to evaluate and update the chronological knowledge of large language models (LLMs). It builds on the **ChroKnowBench** dataset, which enables testing LLMs' ability to handle chronologically accumulated knowledge across multiple domains, including general, biomedical, legal, commonsense, and mathematical facts. This repository also features **ChroKnowPrompt**, a technique for in-depth prompting to enhance temporal reasoning and improve the accuracy of LLMs over a timeline.
@@ -7,9 +7,10 @@
   🏠 <a href="https://p-yi.github.io/ChroKnowledge/" target="_blank">Homepage</a> | 📃 <a href="https://arxiv.org/abs/2410.09870" target="_blank">Paper</a> | 🤗 <a href="https://huggingface.co/datasets/dmis-lab/ChroKnowBench" target="_blank">Datasets</a> 
 </p>
 
-![](assets/fig_overview.png)
+![](assets/fig_overview_rebuttal_1.png)
 
 ## Updates
+[Jan 23, 2025] Our paper has been accepted to ICLR 2025! 🎉
 [Nov 28, 2024] Our paper is now updated to the latest version.    
 [Oct 18, 2024] We post a [homepage](https://p-yi.github.io/ChroKnowledge/) for overview of our work.   
 [Oct 11, 2024] We have released the code and data.
@@ -139,7 +140,7 @@ Use the `run_classification.ipynb` notebook to classify and analyze the model's 
 
 ### Step 2: ChroKnowPrompt Implementation
 
-![](assets/fig_chroknow_prompt.png)
+![](assets/figure_chronological_prompting_rebuttal_1.png)
 
 After running Step 1, you can use the ChroKnowPrompt prompting strategy to enhance the model's ability to recall and reason about chronological knowledge. This is implemented using the `run_chroknow_prompt.sh` script. Below is a detailed breakdown of the process:
 

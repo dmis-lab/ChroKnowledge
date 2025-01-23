@@ -20,7 +20,7 @@ genai.configure(api_key=api_key_google)
 
 model_id_dict = {
     "Phi3.5_Mini": "microsoft/Phi-3.5-mini-instruct",
-    "Llama3.1_8B": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+    "Llama3.1_8B": "meta-llama/Llama-3.1-8B-Instruct",
     "Gemma2_9B": "google/gemma-2-9b-it",
     "Mistral7B": "mistralai/Mistral-7B-Instruct-v0.3",
     "Llama3_8B": "meta-llama/Meta-Llama-3-8B-Instruct",

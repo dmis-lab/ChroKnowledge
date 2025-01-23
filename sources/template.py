@@ -81,6 +81,37 @@ Q. In {{t}}, {{q}}
 
 ### Prompt of TF (True False) ###
 
+# prompt_TF_Biomedical_t = {
+#     "isa": Template("""Q. In {{t}}, {{sub}} is a {{obj}}.
+# """),
+#     "inverse isa": Template("""Q. In {{t}}, {{sub}} is an inverse of {{obj}}.
+# """),
+#     "direct procedure site of": Template("""Q. In {{t}}, {{sub}} is direct procedure site of {{obj}}.
+# """),
+#     "indirect procedure site of": Template("""Q. In {{t}}, {{sub}} is indirect procedure site of {{obj}}.
+# """),
+#     "is primary anatomic site of disease": Template("""Q. In {{t}}, {{sub}} is primary anatomic site of disease {{obj}}.
+# """),
+#     "is not primary anatomic site of disease": Template("""Q. In {{t}}, {{sub}} is not the primary anatomic site of disease {{obj}}.
+# """),
+#     "is normal tissue origin of disease": Template("""Q. In {{t}}, {{sub}} is normal tissue origin of disease {{obj}}.
+# """),
+#     "is not normal tissue origin of disease": Template("""Q. In {{t}}, {{sub}} is not normal tissue origin of disease {{obj}}.
+# """),
+#     "is normal cell origin of disease": Template("""Q. In {{t}}, {{sub}} is normal cell origin of disease {{obj}}.
+# """),
+#     "is not normal cell origin of disease": Template("""Q. In {{t}}, {{sub}} is not normal cell origin of disease {{obj}}.
+# """),
+#     "has direct procedure site": Template("""Q. In {{t}}, {{sub}} has direct procedure site {{obj}}.
+# """),
+#     "has indirect procedure site": Template("""Q. In {{t}}, {{sub}} has indirect procedure site {{obj}}.
+# """),
+#     "positively regulates": Template("""Q. In {{t}}, {{sub}} positively regulates {{obj}}.
+# """),
+#     "negatively regulates": Template("""Q. In {{t}}, {{sub}} negatively regulates {{obj}}.
+# """)
+# }
+
 prompt_TF_Biomedical_t = {
     "isa": Template("""Q. In {{t}}, {{sub}} is a {{obj}}.
 """),
@@ -88,27 +119,23 @@ prompt_TF_Biomedical_t = {
 """),
     "direct_procedure_site_of": Template("""Q. In {{t}}, {{sub}} is direct procedure site of {{obj}}.
 """),
-    "indirect_procedure_site_of": Template("""Q. In {{t}}, {{sub}} is indirect procedure site of {{obj}}.
-"""),
-    "is_primary_anatomic_site_of_disease": Template("""Q. In {{t}}, {{sub}} is primary anatomic site of disease {{obj}}.
-"""),
-    "is_not_primary_anatomic_site_of_disease": Template("""Q. In {{t}}, {{sub}} is not the primary anatomic site of disease {{obj}}.
-"""),
-    "is_normal_tissue_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is normal tissue origin of disease {{obj}}.
-"""),
-    "is_not_normal_tissue_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is not normal tissue origin of disease {{obj}}.
-"""),
-    "is_normal_cell_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is normal cell origin of disease {{obj}}.
-"""),
-    "is_not_normal_cell_origin_of_disease": Template("""Q. In {{t}}, {{sub}} is not normal cell origin of disease {{obj}}.
-"""),
     "has_direct_procedure_site": Template("""Q. In {{t}}, {{sub}} has direct procedure site {{obj}}.
 """),
-    "has_indirect_procedure_site": Template("""Q. In {{t}}, {{sub}} has indirect procedure site {{obj}}.
+    "may_prevent": Template("""Q. In {{t}}, {{sub}} may prevent {{obj}}.
 """),
-    "positively_regulates": Template("""Q. In {{t}}, {{sub}} positively regulates {{obj}}.
+    "may_be_prevented_by": Template("""Q. In {{t}}, {{sub}} may be prevented by {{obj}}.
 """),
-    "negatively_regulates": Template("""Q. In {{t}}, {{sub}} negatively regulates {{obj}}.
+    "may_treat": Template("""Q. In {{t}}, {{sub}} may treat {{obj}}.
+"""),
+    "may_be_treated_by": Template("""Q. In {{t}}, {{sub}} may be treated by {{obj}}.
+"""),
+    "induces": Template("""Q. In {{t}}, {{sub}} induces {{obj}}.
+"""),
+    "causative_agent_of": Template("""Q. In {{t}}, {{sub}} is causative agent of {{obj}}.
+"""),
+    "has_mechanism_of_action": Template("""Q. In {{t}}, {{sub}} has mechanism of action {{obj}}.
+"""),
+    "has_physiologic_effect": Template("""Q. In {{t}}, {{sub}} has physiologic effect {{obj}}.
 """)
 }
 
@@ -184,94 +211,172 @@ prompt_TF_Math_t = {
 
 ### Prompt of MCQA (Question Answer) ###
 
+# prompt_QA_Biomedical = {
+#     "isa": Template("""Which of the following is classified as a {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "inverse isa": Template("""Which of the following is classified as an inverse of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "direct procedure site of": Template("""What is direct procedure site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "indirect procedure site of": Template("""What is indirect procedure site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "is primary anatomic site of disease": Template("""What is the primary anatomic site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "is not primary anatomic site of disease": Template("""What is not the primary anatomic site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "is normal tissue origin of disease": Template("""What is the normal tissue of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "is not normal tissue origin of disease": Template("""What is not the normal tissue of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "is normal cell origin of disease": Template("""What is the normal cell of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "is not normal cell origin of disease": Template("""What is not the normal cell of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "has direct procedure site": Template("""What has direct procedure site {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "has indirect procedure site": Template("""What has indirect procedure site {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "positively regulates": Template("""What positively regulates {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "negatively regulates": Template("""What negatively regulates {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+# }
+
 prompt_QA_Biomedical = {
-    "isa": Template("""Which of the following is classified as a {{sub}}?
+   "isa": Template("""Which of the following is classified as a {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "inverse_isa": Template("""Which of the following is classified as an inverse of {{sub}}?
+   "inverse_isa": Template("""Which of the following is classified as an inverse of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "direct_procedure_site_of": Template("""What is direct procedure site of {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),
-    "indirect_procedure_site_of": Template("""What is indirect procedure site of {{sub}}?
+"""), # reversed
+   "direct_procedure_site_of": Template("""What is direct procedure site of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "is_primary_anatomic_site_of_disease": Template("""What is the primary anatomic site of {{sub}}?
+   "has_direct_procedure_site": Template("""What has direct procedure site {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "is_not_primary_anatomic_site_of_disease": Template("""What is not the primary anatomic site of {{sub}}?
+   "may_prevent": Template("""Which of the following may prevent {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "is_normal_tissue_origin_of_disease": Template("""What is the normal tissue of origin for {{sub}}?
+   "may_be_prevented_by": Template("""Which of the following does {{sub}} may prevent?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "is_not_normal_tissue_origin_of_disease": Template("""What is not the normal tissue of origin for {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "is_normal_cell_origin_of_disease": Template("""What is the normal cell of origin for {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "is_not_normal_cell_origin_of_disease": Template("""What is not the normal cell of origin for {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "has_direct_procedure_site": Template("""What has direct procedure site {{sub}}?
+"""), # reversed
+   "may_treat": Template("""Which of the following may treat {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "has_indirect_procedure_site": Template("""What has indirect procedure site {{sub}}?
+   "may_be_treated_by": Template("""Which of the following does {{sub}} may treat?
+(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+"""), # reversed
+   "induces": Template("""Which of the following induces {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "positively_regulates": Template("""What positively regulates {{sub}}?
+   "causative_agent_of": Template("""What is {{sub}} the causative agent of?
+(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+"""), # reversed
+   "has_mechanism_of_action": Template("""What is the mechanism of action of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "negatively_regulates": Template("""What negatively regulates {{sub}}?
+   "has_physiologic_effect": Template("""What is the physiologic effect of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),
+""")
 }
 
+# prompt_QA_Biomedical_t = {
+#     "isa": Template("""In {{t}}, which of the following is classified as a {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "inverse isa": Template("""In {{t}}, which of the following is classified as an inverse of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "direct procedure site of": Template("""In {{t}}, what is direct procedure site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "indirect procedure site of": Template("""In {{t}}, what is indirect procedure site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "is primary anatomic site of disease": Template("""In {{t}}, what is the primary anatomic site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "is not primary anatomic site of disease": Template("""In {{t}}, what is not the primary anatomic site of {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "is normal tissue origin of disease": Template("""In {{t}}, what is the normal tissue of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "is not normal tissue origin of disease": Template("""In {{t}}, what is not the normal tissue of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "is normal cell origin of disease": Template("""In {{t}}, what is the normal cell of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "is not normal cell origin of disease": Template("""In {{t}}, what is not the normal cell of origin for {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),# reversed
+#     "has direct procedure site": Template("""In {{t}}, what has direct procedure site {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "has indirect procedure site": Template("""In {{t}}, what has indirect procedure site {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "positively regulates": Template("""In {{t}}, what positively regulates {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+#     "negatively regulates": Template("""In {{t}}, what negatively regulates {{sub}}?
+# (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+# """),
+# }
+
 prompt_QA_Biomedical_t = {
-    "isa": Template("""In {{t}}, which of the following is classified as a {{sub}}?
+   "isa": Template("""In {{t}}, which of the following is classified as a {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "inverse_isa": Template("""In {{t}}, which of the following is classified as an inverse of {{sub}}?
+   "inverse_isa": Template("""In {{t}}, which of the following is classified as an inverse of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "direct_procedure_site_of": Template("""In {{t}}, what is direct procedure site of {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),
-    "indirect_procedure_site_of": Template("""In {{t}}, what is indirect procedure site of {{sub}}?
+"""), # reversed
+   "direct_procedure_site_of": Template("""In {{t}}, what is direct procedure site of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "is_primary_anatomic_site_of_disease": Template("""In {{t}}, what is the primary anatomic site of {{sub}}?
+   "has_direct_procedure_site": Template("""In {{t}}, what has direct procedure site {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "is_not_primary_anatomic_site_of_disease": Template("""In {{t}}, what is not the primary anatomic site of {{sub}}?
+   "may_prevent": Template("""In {{t}}, which of the following may prevent {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "is_normal_tissue_origin_of_disease": Template("""In {{t}}, what is the normal tissue of origin for {{sub}}?
+   "may_be_prevented_by": Template("""In {{t}}, which of the following does {{sub}} may prevent?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "is_not_normal_tissue_origin_of_disease": Template("""In {{t}}, what is not the normal tissue of origin for {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "is_normal_cell_origin_of_disease": Template("""In {{t}}, what is the normal cell of origin for {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "is_not_normal_cell_origin_of_disease": Template("""In {{t}}, what is not the normal cell of origin for {{sub}}?
-(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),# reversed
-    "has_direct_procedure_site": Template("""In {{t}}, what has direct procedure site {{sub}}?
+"""), # reversed
+   "may_treat": Template("""In {{t}}, which of the following may treat {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "has_indirect_procedure_site": Template("""In {{t}}, what has indirect procedure site {{sub}}?
+   "may_be_treated_by": Template("""In {{t}}, which of the following does {{sub}} may treat?
+(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+"""), # reversed
+   "induces": Template("""In {{t}}, which of the following induces {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "positively_regulates": Template("""In {{t}}, what positively regulates {{sub}}?
+   "causative_agent_of": Template("""In {{t}}, what is {{sub}} the causative agent of?
+(a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
+"""), # reversed
+   "has_mechanism_of_action": Template("""In {{t}}, what is the mechanism of action of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
 """),
-    "negatively_regulates": Template("""In {{t}}, what negatively regulates {{sub}}?
+   "has_physiologic_effect": Template("""In {{t}}, what is the physiologic effect of {{sub}}?
 (a) {{Ans1}} (b) {{Ans2}} (c) {{Ans3}} (d) {{Ans4}}
-"""),
+""")
 }
 
 prompt_QA_General = {
@@ -478,48 +583,48 @@ prompt_QA_Math_t = {
 Sent_Biomedical_t = {
     "isa": Template("""In {{t}}, {{sub}} is a {{obj}}."""),
     
-    "inverse_isa": Template("""In {{t}}, {{sub}} is an inverse of {{obj}}."""),
+    "inverse isa": Template("""In {{t}}, {{sub}} is an inverse of {{obj}}."""),
     
-    "direct_procedure_site_of": Template("""In {{t}}, {{sub}} is direct procedure site of {{obj}}."""),
+    "direct procedure site of": Template("""In {{t}}, {{sub}} is direct procedure site of {{obj}}."""),
     
-    "indirect_procedure_site_of": Template("""In {{t}}, {{sub}} is indirect procedure site of {{obj}}."""),
+    "indirect procedure site of": Template("""In {{t}}, {{sub}} is indirect procedure site of {{obj}}."""),
     
-    "is_primary_anatomic_site_of_disease": Template("""In {{t}}, {{sub}} is primary anatomic site of disease {{obj}}."""),
+    "is primary anatomic site of disease": Template("""In {{t}}, {{sub}} is primary anatomic site of disease {{obj}}."""),
     
-    "is_not_primary_anatomic_site_of_disease": Template("""In {{t}}, {{sub}} is not the primary anatomic site of disease {{obj}}."""),
+    "is not primary anatomic site of disease": Template("""In {{t}}, {{sub}} is not the primary anatomic site of disease {{obj}}."""),
     
-    "is_normal_tissue_origin_of_disease": Template("""In {{t}}, {{sub}} is normal tissue origin of disease {{obj}}."""),
+    "is normal tissue origin of disease": Template("""In {{t}}, {{sub}} is normal tissue origin of disease {{obj}}."""),
     
-    "is_not_normal_tissue_origin_of_disease": Template("""In {{t}}, {{sub}} is not normal tissue origin of disease {{obj}}."""),
+    "is not normal tissue origin of disease": Template("""In {{t}}, {{sub}} is not normal tissue origin of disease {{obj}}."""),
     
-    "is_normal_cell_origin_of_disease": Template("""In {{t}}, {{sub}} is normal cell origin of disease {{obj}}."""),
+    "is normal cell origin of disease": Template("""In {{t}}, {{sub}} is normal cell origin of disease {{obj}}."""),
     
-    "is_not_normal_cell_origin_of_disease": Template("""In {{t}}, {{sub}} is not normal cell origin of disease {{obj}}."""),
+    "is not normal cell origin of disease": Template("""In {{t}}, {{sub}} is not normal cell origin of disease {{obj}}."""),
     
-    "has_direct_procedure_site": Template("""In {{t}}, {{sub}} has direct procedure site {{obj}}."""),
+    "has direct procedure site": Template("""In {{t}}, {{sub}} has direct procedure site {{obj}}."""),
     
-    "has_indirect_procedure_site": Template("""In {{t}}, {{sub}} has indirect procedure site {{obj}}."""),
+    "has indirect procedure site": Template("""In {{t}}, {{sub}} has indirect procedure site {{obj}}."""),
     
-    "positively_regulates": Template("""In {{t}}, {{sub}} positively regulates {{obj}}."""),
+    "positively regulates": Template("""In {{t}}, {{sub}} positively regulates {{obj}}."""),
     
-    "negatively_regulates": Template("""In {{t}}, {{sub}} negatively regulates {{obj}}.""")
+    "negatively regulates": Template("""In {{t}}, {{sub}} negatively regulates {{obj}}.""")
 }
 
 single_prompt_QA_Biomedical_t = {
     "isa": Template("""In {{t}}, which of the following is classified as a {{sub}}?"""),
-    "inverse_isa": Template("""In {{t}}, which of the following is classified as an inverse of {{sub}}?"""),# reversed
-    "direct_procedure_site_of": Template("""In {{t}}, what is direct procedure site of {{sub}}?"""),
-    "indirect_procedure_site_of": Template("""In {{t}}, what is indirect procedure site of {{sub}}?"""),
-    "is_primary_anatomic_site_of_disease": Template("""In {{t}}, what is the primary anatomic site of {{sub}}?"""),
-    "is_not_primary_anatomic_site_of_disease": Template("""In {{t}}, what is not the primary anatomic site of {{sub}}?"""),
-    "is_normal_tissue_origin_of_disease": Template("""In {{t}}, what is the normal tissue of origin for {{sub}}?"""),# reversed
-    "is_not_normal_tissue_origin_of_disease": Template("""In {{t}}, what is not the normal tissue of origin for {{sub}}?"""),# reversed
-    "is_normal_cell_origin_of_disease": Template("""In {{t}}, what is the normal cell of origin for {{sub}}?"""),# reversed
-    "is_not_normal_cell_origin_of_disease": Template("""In {{t}}, what is not the normal cell of origin for {{sub}}?"""),# reversed
-    "has_direct_procedure_site": Template("""In {{t}}, what has direct procedure site {{sub}}?"""),
-    "has_indirect_procedure_site": Template("""In {{t}}, what has indirect procedure site {{sub}}?"""),
-    "positively_regulates": Template("""In {{t}}, what positively regulates {{sub}}?"""),
-    "negatively_regulates": Template("""In {{t}}, what negatively regulates {{sub}}?"""),
+    "inverse isa": Template("""In {{t}}, which of the following is classified as an inverse of {{sub}}?"""),# reversed
+    "direct procedure site of": Template("""In {{t}}, what is direct procedure site of {{sub}}?"""),
+    "indirect procedure site of": Template("""In {{t}}, what is indirect procedure site of {{sub}}?"""),
+    "is primary anatomic site of disease": Template("""In {{t}}, what is the primary anatomic site of {{sub}}?"""),
+    "is not primary anatomic site of disease": Template("""In {{t}}, what is not the primary anatomic site of {{sub}}?"""),
+    "is normal tissue origin of disease": Template("""In {{t}}, what is the normal tissue of origin for {{sub}}?"""),# reversed
+    "is not normal tissue origin of disease": Template("""In {{t}}, what is not the normal tissue of origin for {{sub}}?"""),# reversed
+    "is normal cell origin of disease": Template("""In {{t}}, what is the normal cell of origin for {{sub}}?"""),# reversed
+    "is not normal cell origin of disease": Template("""In {{t}}, what is not the normal cell of origin for {{sub}}?"""),# reversed
+    "has direct procedure site": Template("""In {{t}}, what has direct procedure site {{sub}}?"""),
+    "has indirect procedure site": Template("""In {{t}}, what has indirect procedure site {{sub}}?"""),
+    "positively regulates": Template("""In {{t}}, what positively regulates {{sub}}?"""),
+    "negatively regulates": Template("""In {{t}}, what negatively regulates {{sub}}?"""),
 }
 
 single_prompt_QA_General_t = {
