@@ -10,7 +10,7 @@
 ![](assets/fig_overview_rebuttal_1.png)
 
 ## Updates
-[Jan 23, 2025] Our paper has been accepted to ICLR 2025! 🎉
+[Jan 23, 2025] Our paper has been accepted to ICLR 2025! 🎉     
 [Nov 28, 2024] Our paper is now updated to the latest version.    
 [Oct 18, 2024] We post a [homepage](https://p-yi.github.io/ChroKnowledge/) for overview of our work.   
 [Oct 11, 2024] We have released the code and data.
