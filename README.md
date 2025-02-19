@@ -11,14 +11,19 @@
 
 ## Updates
 [Feb 19, 2025] We now update the latest version of framework and dataset.     
+
    - Supported model is updated: Gemini series, Qwen 2.5 72B, mpt 7B, Pythia 7B, Nemotron3, Mistral 7B Chat and DeepSeek R1 Distll 70B.
    - `TF` template is now supported.
    - Biomedical ChroKnowBench is updated.
    - Parsing Codes for UMLS will be supported ASAP.
    - Minor errors are patched.
+
 [Jan 23, 2025] Our paper has been accepted to ICLR 2025! 🎉     
+
 [Nov 28, 2024] Our paper is now updated to the latest version.    
+
 [Oct 18, 2024] We post a [homepage](https://p-yi.github.io/ChroKnowledge/) for overview of our work.   
+
 [Oct 11, 2024] We have released the code and data.
 
 ## Task Definition
