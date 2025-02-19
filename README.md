@@ -57,7 +57,7 @@ Our **ChroKnowBench** consists of datasets from multiple domains, with character
 | Time Invariant  | Commonsense         | 8              | Yes        | (s, r, o)               | Invariant      | 24,788        | CSKG     |
 |                 | Math                | 12             | Yes        | (s, r, o)               | Invariant      | 2,585         | Math-KG  |
 
-\* We've expanded the time frame of Biomedical ChroKnowBench, from 2020-2024 to **2010**-2024.
+\* We've expanded the time frame of Biomedical ChroKnowBench, from 2020-2024 to **2010**-2024.      
 \*\* For LEGAL dataset in time variant, it is the number of category like `Organization', as it is unstructured dataset without specific short relations.
 
 ### Dataset Download
