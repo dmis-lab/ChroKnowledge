@@ -10,6 +10,12 @@
 ![](assets/fig_overview_rebuttal_1.png)
 
 ## Updates
+[Feb 19, 2025] We now update the latest version of framework and dataset.     
+   - Supported model is updated: Gemini series, Qwen 2.5 72B, mpt 7B, Pythia 7B, Nemotron3, Mistral 7B Chat and DeepSeek R1 Distll 70B.
+   - `TF` template is now supported.
+   - Biomedical ChroKnowBench is updated.
+   - Parsing Codes for UMLS will be supported ASAP.
+   - Minor errors are patched.
 [Jan 23, 2025] Our paper has been accepted to ICLR 2025! 🎉     
 [Nov 28, 2024] Our paper is now updated to the latest version.    
 [Oct 18, 2024] We post a [homepage](https://p-yi.github.io/ChroKnowledge/) for overview of our work.   
@@ -42,17 +48,18 @@ Our **ChroKnowBench** consists of datasets from multiple domains, with character
 |-----------------|---------------------|----------------|------------|-------------------------|----------------|---------------|----------|
 | Time Variant    | General (2010-2023) | 8              | Yes        | (s, r, o, t)            | Dynamic        | 8,330         | Wikidata |
 |                 |                     |                |            |                         | Static         | 8,302         | Wikidata |
-|                 | Biomedical (2020-2024) | 14           | Yes        | (s, r, o, t)            | Dynamic        | 7,345         | UMLS     |
-|                 |                     |                |            |                         | Static         | 7,345         | UMLS     |
-|                 | Legal (2010-2023)   | 6*             | No         | QA                      | Dynamic        | 3,142         | CFR      |
+|                 | Biomedical (2010-2024)* | 12           | Yes        | (s, r, o, t)            | Dynamic        | 7,155         | UMLS     |
+|                 |                     |                |            |                         | Static         | 7,155         | UMLS     |
+|                 | Legal (2010-2023)   | 6**             | No         | QA                      | Dynamic        | 3,142         | CFR      |
 |                 |                     |                |            |                         | Static         | 3,142         | CFR      |
 | Time Invariant  | Commonsense         | 8              | Yes        | (s, r, o)               | Invariant      | 24,788        | CSKG     |
 |                 | Math                | 12             | Yes        | (s, r, o)               | Invariant      | 2,585         | Math-KG  |
 
-\* For LEGAL dataset in time variant, it is the number of category like `Organization', as it is unstructured dataset without specific short relations.
+\* We've expanded the time frame of Biomedical ChroKnowBench, from 2020-2024 to **2010**-2024.
+\*\* For LEGAL dataset in time variant, it is the number of category like `Organization', as it is unstructured dataset without specific short relations.
 
 ### Dataset Download
-For Biomedical dataset(Dynamic, Static and Fewshot), it is released [here](https://drive.google.com/file/d/17CMKxerO_j_B3r36QLtsyViQGfI0xn5l/view?usp=sharing).
+For Biomedical dataset(Dynamic, Static and Fewshot), it is released [here](https://drive.google.com/file/d/1QCE_ewDb8gXeMSH0C0NJ1WHnpzjPVXuB/view?usp=sharing).
 Please append each jsonl file to appropriate directory(`/ChroKnowBench` for Dynamic, Static file, and `/ChroKnowBench/Fewshots` for Fewshot file).
 Other benchmarks can be downloaded in [Huggingface Datasets](https://huggingface.co/datasets/dmis-lab/ChroKnowBench).
 
@@ -108,7 +115,7 @@ To evaluate the initial temporal knowledge of the model, you can run the `run_kn
    ```
    ⚠️ Warning: As the basic sampling is five times for each year, be careful for the cost of calling API.
 
-3. **Domain and Template**: You can specify the domain (e.g., `General`, `Biomedical`, `Legal`) and the type of task (`generation`, `QA`) by setting the `domain` and `template` variables, respectively.
+3. **Domain and Template**: You can specify the domain (e.g., `General`, `Biomedical`, `Legal`) and the type of task (`generation`, `QA`, `TF`) by setting the `domain` and `template` variables, respectively.
    ```bash
    domain="General"
    template="generation"
@@ -183,11 +190,12 @@ Use the `run_evaluation.ipynb` notebook to evaluate the effectiveness of ChroKno
 
 ### Citation
 ```
-@article{park2024ChroKnowledge,
-  title={ChroKnowledge: Unveiling Chronological Knowledge of Language Models in Multiple Domains},
-  author={Yein Park and Chanwoong Yoon and Jungwoo Park and Donghyeon Lee and Minbyul Jeong and Jaewoo Kang},
-  journal={arXiv preprint arXiv:2410.09870},
-  year={2024}
+@inproceedings{park2025chroknowledge,
+   title={ChroKnowledge: Unveiling Chronological Knowledge of Language Models in Multiple Domains},
+   author={Yein Park and Chanwoong Yoon and Jungwoo Park and Donghyeon Lee and Minbyul Jeong and Jaewoo Kang},
+   booktitle={The Thirteenth International Conference on Learning Representations},
+   year={2025},
+   url={https://openreview.net/forum?id=whaO3482bs}
 }
 ```
 

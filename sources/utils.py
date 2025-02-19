@@ -33,7 +33,8 @@ model_id_dict = {
     "mpt_7B": "mosaicml/mpt-7b-chat",
     "Pythia_7B": "togethercomputer/Pythia-Chat-Base-7B",
     "Nemotron3": "mgoin/nemotron-3-8b-chat-4k-sft-hf",
-    "Mistral7B_Chat": "Norquinal/Mistral-7B-claude-chat"
+    "Mistral7B_Chat": "Norquinal/Mistral-7B-claude-chat",
+    "DeepSeek_R1_Distill": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
 }
 
 
@@ -387,6 +388,10 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             return [
                 {"role": "user", "content": system_prompt + '\n\n' + accumulated_prompt_content} # Gemma model doesn't have system prompt
             ]
+        elif "DeepSeek" in model_name.lower():
+            return [
+                {"role": "user", "content": system_prompt + '\n\n' + accumulated_prompt_content} # DeepSeek model doesn't have system prompt
+            ]
         else:
             return [
             {"role": "system", "content": system_prompt},  # Use the selected system prompt
@@ -472,7 +477,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             tentative_ans_list.append(tentative_ans)
 
             # Accumulate the current Q&A pair into the overall prompt
-            if "gemma" in model_name.lower():
+            if any(x in model_name.lower() for x in ["gemma", "DeepSeek"]):
                 system_prompt_patterns = [re.escape(chrono_cand_system), re.escape(chrono_none_system)]
 
                 # Join the patterns to create a single pattern that matches either system prompt
@@ -553,7 +558,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             tentative_ans_list.append(tentative_ans)
 
             # Accumulate the prompt content for the next iteration
-            if "gemma" in model_name.lower():
+            if any(x in model_name.lower() for x in ["gemma", "DeepSeek"]):
                 system_prompt_patterns = [re.escape(chrono_cand_system), re.escape(chrono_none_system)]
 
                 # Join the patterns to create a single pattern that matches either system prompt
