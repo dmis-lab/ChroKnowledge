@@ -12,7 +12,7 @@
 ## Updates
 [Feb 19, 2025] We now update the latest version of framework and dataset.     
 
-   - Supported model is updated: Gemini series, Qwen 2.5 72B, mpt 7B, Pythia 7B, Nemotron3, Mistral 7B Chat and DeepSeek R1 Distll 70B.
+   - Supported model is updated: Gemini series, Qwen 2.5 72B, mpt 7B, Pythia 7B, Nemotron3, Mistral 7B Chat and DeepSeek R1 Distll 70B (based on Llama3.3 70B).
    - `TF` template is now supported.
    - Biomedical ChroKnowBench is updated.
    - Parsing Codes for UMLS will be supported ASAP.
