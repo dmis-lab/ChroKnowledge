@@ -431,6 +431,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
                 example = create_example(reference_data)
                 # print("Example for first previous year:", example)
                 prompt_messages = create_prompt(
+                    model_name=model_name,
                     domain=domain,
                     reference_year=year,
                     target_year=target_year,
@@ -443,6 +444,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             else:
                 example = create_example(reference_data)
                 prompt_messages = create_prompt(
+                    model_name=model_name,
                     domain=domain,
                     reference_year=year,
                     target_year=target_year,
@@ -511,6 +513,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
                 example = create_example(reference_data)
                 # print("Example for first next year:", example)
                 prompt_messages = create_prompt(
+                    model_name=model_name,
                     domain=domain,
                     reference_year=year,
                     target_year=target_year,
@@ -523,6 +526,7 @@ def generate_chrono_ans(model_name, partial_known, target_year, triplet, llm, to
             else:
                 example = create_example(reference_data)
                 prompt_messages = create_prompt(
+                    model_name=model_name,
                     domain=domain,
                     reference_year=year,
                     target_year=target_year,
